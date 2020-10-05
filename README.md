@@ -4,31 +4,23 @@ Implementation of TAAConvLSTM and SAAConvLSTM used in "Attention Augmented ConvL
 
 TAAConvLSTM and SAAConvLSTM are attention augmented ConvLSTM mechanisms motivated by the limited long-range dependencies between hidden representations resulting in the vanishing of moving objects and poor spatial dependcies in the hidden representations. 
 
+![](images/Kitti.gif) ![](images/Waymo.gif)
+
+
 We test it as part of the PredNet architecture (Lotter W, Kreiman G, Cox D., 2016). The comparison of the predictions is shown below.
 
-Trained on:
+## Setup
 - Python 3.7
-- Pytorch 1.4.0 (cudatoolkit=10.1)
-- Numpy 1.18.5
+- Libraries: PyTorch (1.4.1/cudatoolkit=10.1) + tensorboard + numpy + scikit-image + math + yaml + argparser + hickle.\
+- Tested in Ubuntu + Nvidia RTX 2080Ti with CUDA (10.1).
 
+## Datasets
+We run experiments on: [KITTI](http://www.cvlibs.net/datasets/kitti/raw_data.php), [Waymo](https://waymo.com/open/).\
+Dataset processing according to: https://github.com/mitkina/EnvironmentPrediction.
+Modify the config in the configs file with a path to the preprocessed dataset.
 
-# Demo
-
-### 1. Download data.
-
-```python
-Link to the data.
-```
-
-### 2. Train the model.
-```python
-Train with an appropriate model.
-```
-
-### 3. Evaluate the model.
-```python
-Evaluate.
-```
+## Training & Inference
+The procedure to train the models and make inference are described in the README.md files in the Code/PredNet_(TAA/SAA)ConvLSTM folder.
 
 
 ## References 
