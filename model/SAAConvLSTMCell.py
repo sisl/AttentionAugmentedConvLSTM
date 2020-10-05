@@ -1,9 +1,3 @@
-""" Follows the definition from
-Convolutional LSTM Network: A Machine Learning Approach for Precipitation
-Nowcasting """
-
-"Code based on https://github.com/automan000/Convolutional_LSTM_PyTorch/blob/master/convolution_lstm.py"
-
 import torch
 import torch.nn as nn
 from torch.autograd import Variable
@@ -11,14 +5,20 @@ from model.AAConv2d import AAConv2d
 
 class SAAConvLSTMCell(nn.Module):
 
-    """
-    LSTM:
-        x - input
-        h - hidden representation
-        c - memory cell
-        f - forget gate
-        o - output gate
-    """
+    '''
+    Self-Attention Augmented Convolutional LSTM defined in "Attention Augmented ConvLSTM for Environment Prediction"
+
+    # Arguments:
+        input_channels: number of channels in the input
+        hidden_channels: number of channels in the hidden representation
+        kernel_size: filter size used in the convolution operator
+        num_past_frames: attention horizon
+        dk: number of channels in the key/query
+        dv: number of channels in the value
+        positional_encoding: whether to add positional encoding in the attention calculation
+        forget_bias: whether to add forget bias when training in the forget gate
+        padding: padding
+    '''
     def __init__(self, input_channels, hidden_channels, kernel_size, num_past_frames, dk, dv,
                 Nh, width, height, attention_input_mode='representation', positional_encoding = True, forget_bias = 1.0):
 

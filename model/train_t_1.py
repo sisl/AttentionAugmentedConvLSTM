@@ -1,3 +1,18 @@
+"""
+Code to train PredNet with TAA/SAAConvLSTM in t+1 mode.
+Ground truth provided sequentially (every single frame).
+Follows the procedure defined by Lotter et al.
+
+Based on the existing implementations:
+- Itkina, Masha, Katherine Driggs-Campbell, and Mykel J. Kochenderfer. Tensorflow
+implementation of "Dynamic Environment Prediction in Urban Scenes using Recurrent Representation Learning."
+https://github.com/mitkina/EnvironmentPrediction,
+-Bill Lotter, Gabriel Kreiman, and David Cox Official PredNet Tensorflow
+implementation: https://github.com/coxlab/prednet,
+- Leido Pytorch implementation of PredNet:
+https://github.com/leido/pytorch-prednet/blob/master/kitti_data.py".
+"""
+
 import os
 import numpy as np
 import argparse

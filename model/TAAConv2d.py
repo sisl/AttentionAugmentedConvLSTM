@@ -4,15 +4,22 @@ from torch.autograd import Variable
 from model.SpatioTemporalAttention import SpatioTemporalAttention
 
 class TAAConv2d(nn.Module):
+    '''
+    Temporal Attention Augmented Convolutional defined in "Attention Augmented ConvLSTM for Environment Prediction"
 
-    """
-        Describe temporal self attention
+    # Arguments:
+        input_channels: number of channels in the input
+        output_channels: number of channels in the hidden representation
+        kernel_size: filter size used in the convolution operator
+        padding: padding
+        num_past_frames: attention horizon
+        dk: ratio of number of channels in the key/query to number of channels in the output
+        dv: ratio of number of channels in the value to number of channels in the output
+        Nh: number of heads
+        positional_encoding: whether to add positional encoding in the attention calculation
+        forget_bias: whether to add forget bias when training in the forget gate
 
-        The same varaible names based on "Attention Augmneted Convolutional Networks".
-
-        https://github.com/leaderj1001/Attention-Augmented-Conv2d/blob/master/in_paper_attention_augmented_conv/attention_augmented_conv.pyxs
-
-    """
+    '''
     def __init__(self, input_channels, output_channels, kernel_size, padding, num_past_frames, dk, dv, Nh, width, height, attention_input_mode, relative = True):
 
         super(TAAConv2d, self).__init__()

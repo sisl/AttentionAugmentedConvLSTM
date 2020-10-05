@@ -1,9 +1,3 @@
-""" Follows the definition from
-Convolutional LSTM Network: A Machine Learning Approach for Precipitation
-Nowcasting """
-
-"Code based on https://github.com/automan000/Convolutional_LSTM_PyTorch/blob/master/convolution_lstm.py"
-
 import torch
 import torch.nn as nn
 from torch.autograd import Variable
@@ -11,12 +5,18 @@ from torch.autograd import Variable
 class ConvLSTMCell(nn.Module):
 
     """
-    LSTM:
+    Implementation of the Basic ConvLSTM.
+    No peephole connection, no forget gate.
+
+    ConvLSTM:
         x - input
         h - hidden representation
         c - memory cell
         f - forget gate
         o - output gate
+
+    Reference:Convolutional LSTM Network: A Machine Learning Approach for Precipitation
+    Nowcasting
     """
     def __init__(self, input_channels, hidden_channels, kernel_size):
 

@@ -7,11 +7,15 @@ import math
 class SpatialAttention(nn.Module):
 
     """
-        Describe temporal self attention
+    Spatial Attention implementation.
+    AAConv2d with modified query, key and values.
+    The same varaible names based on "Attention Augmneted Convolutional Networks".
 
-        The same varaible names based on "Attention Augmneted Convolutional Networks".
-
-        https://github.com/leaderj1001/Attention-Augmented-Conv2d/blob/master/in_paper_attention_augmented_conv/attention_augmented_conv.pyxs
+    Based on:
+        -Bello, Irwan, Barret Zoph, Ashish Vaswani, Jonathon Shlens, and Quoc V. Le. Official
+        Tensorflow implementation of Attention Augmented Conv2d "Attention augmented convolutional networks."
+        In Proceedings of the IEEE International Conference on Computer Vision, pp. 3286-3295. 2019. Code included in the paper.
+        -https://github.com/leaderj1001/Attention-Augmented-Conv2d/blob/master/in_paper_attention_augmented_conv/attention_augmented_conv.pyxs
 
     """
     def __init__(self, input_channels, kernel_size, padding, dk, dv, Nh, width, height, relative = True):

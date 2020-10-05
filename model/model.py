@@ -15,6 +15,36 @@ class Model(nn.Module):
                 error_activation=nn.ReLU(), A_activation=nn.ReLU(), LSTM_activation=nn.Tanh(), LSTM_inner_activation='hard_sigmoid',
                 output_mode='error', extrap_start_time=None, attention_input_mode='representation', positional_encoding = True, forget_bias= 1.0):
 
+        '''
+        PredNet with TAA/SAAConvLSTM mechanism.
+        Extended PredNet baseline implementation - Lotter 2016.
+
+        # Arguments
+            stack_sizes: number of channels in targets (A) and predictions (Ahat) in each layer of the architecture.
+                Length is the number of layers in the architecture.
+            R_stack_sizes: number of channels in the representation (R) modules.
+            A_filt_sizes: filter sizes for the target (A) modules.
+            Ahat_filt_sizes: filter sizes for the prediction (Ahat) modules.
+            R_filt_sizes: filter sizes for the representation (R) modules.
+            num_past_frames: number of past frames in the attention calculation (not used, for compatibility with TAAConvLSTM).
+            dk: ratio of number of channels in the key/query to number of channels in the output at each layer
+            dv: ratio of number of channels in the value to number of channels in the output at each layer
+            width: width of the image
+            height: height of the image
+            pixel_max: the maximum pixel value.
+            error_activation: activation function for the error (E) units.
+            A_activation: activation function for the target (A) and prediction (A_hat) units.
+            LSTM_activation: activation function for the cell and hidden states of the LSTM.
+            LSTM_inner_activation: activation function for the gates in the LSTM.
+            output_mode: either 'error', 'prediction', 'all' or layer specification (ex. R2, see below).
+                Controls what is outputted by the PredNet.
+                If 'error', the mean response of the error (E) units of each layer will be outputted.
+                    That is, the output shape will be (batch_size, nb_layers).
+                If 'prediction', the frame prediction will be outputted.
+            extrap_start_time: time step for which model will start extrapolating.
+                Starting at this time step, the prediction from the previous time step will be treated as the "actual".
+        '''
+
         super(Model, self).__init__()
         self.stack_sizes = stack_sizes
         self.layer_type = layer_type

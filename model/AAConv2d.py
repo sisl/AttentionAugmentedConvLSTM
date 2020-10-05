@@ -1,3 +1,9 @@
+"""
+Pytorch implementation of Attention Augmented Convolution.
+Developed by: Myeongjun Kim (not us)
+Source code: https://github.com/leaderj1001/Attention-Augmented-Conv2d
+"""
+
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -5,9 +11,6 @@ import torch.nn.functional as F
 use_cuda = torch.cuda.is_available()
 device = torch.device("cuda" if use_cuda else "cpu")
 
-"""
-https://github.com/leaderj1001/Attention-Augmented-Conv2d/blob/master/in_paper_attention_augmented_conv/attention_augmented_conv.py
-"""
 class AAConv2d(nn.Module):
     def __init__(self, in_channels, out_channels, kernel_size, dk, dv, Nh, relative=True):
         super(AAConv2d, self).__init__()
