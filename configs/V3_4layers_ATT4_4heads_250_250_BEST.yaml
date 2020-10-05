@@ -1,0 +1,28 @@
+model:
+  nt: 20
+  nb_of_layers: 4
+  type_of_all_layers: [0, 1, 2]
+  type_of_attention: [Avg, Native]
+  input_shape: [2, 128, 128] # n_channels, im_hegiht, im_width
+  stack_sizes: [48, 96, 192] # same as R_stack_sizes
+  A_filt_sizes: [3, 3, 3]
+  Ahat_filt_sizes: [3, 3, 3, 3]
+  R_filt_sizes: [3, 3, 3, 3]
+  attention_horizon: 4
+  Nh: 4
+  key_query_dimension: 250
+  value_dimension: 250
+  attention_fusion: learned_weight
+
+training:
+  dataset_path: "../DATASETS/KITTI/DST_EV/"
+  model_name: V3_4layers_ATT4_4heads_250_250_BEST
+  save_model: True
+  nb_epochs: 100
+  batch_size: 1
+  samples_per_epoch: 500
+  N_seq_val: 100
+  optimizer:
+    type: Adam
+    initial_lr: 0.1
+    lr_scheduling: cosine_decay
