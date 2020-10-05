@@ -6,8 +6,9 @@ import torch.nn as nn
 
 from torch.nn import functional as F
 from torch.autograd import Variable
-from model.TAAConvLSTMCell import TAAConvLSTMCell
 from model.ConvLSTMCell import ConvLSTMCell
+from model.TAAConvLSTMCell import TAAConvLSTMCell
+from model.SAAConvLSTMCell import SAAConvLSTMCell
 
 class Model(nn.Module):
     def __init__(self, layer_type, stack_sizes, R_stack_sizes, A_filt_sizes, Ahat_filt_sizes, R_filt_sizes, num_past_frames, dk, dv, Nh, width, height, pixel_max=1.,
@@ -61,6 +62,11 @@ class Model(nn.Module):
                                             self.num_past_frames, self.dk, self.dv, self.Nh, width, height, self.attention_input_mode,
                                             self.positional_encoding, self.forget_bias)
                     setattr(self, 'cell{}'.format(l), cell)
+                elif self.layer_type[l] == 'SAAConvLSTM':
+                    cell = SAAConvLSTMCell(2 * self.stack_sizes[l] + self.R_stack_sizes[l+1], self.R_stack_sizes[l], self.R_filt_sizes[l],
+                                                self.num_past_frames, self.dk, self.dv, self.Nh, width, height, self.attention_input_mode,
+                                                self.positional_encoding, self.forget_bias)
+                    setattr(self, 'cell{}'.format(l), cell)
                 else:
                     print("Error. Layer type not recognized.")
             else: #l==self.nb_layers
@@ -71,6 +77,11 @@ class Model(nn.Module):
                     cell = TAAConvLSTMCell(2 * self.stack_sizes[l], self.R_stack_sizes[l], self.R_filt_sizes[l],
                                             self.num_past_frames, self.dk, self.dv, self.Nh, width, height,
                                             self.attention_input_mode, self.positional_encoding, self.forget_bias)
+                    setattr(self, 'cell{}'.format(l), cell)
+                elif self.layer_type[l] == 'SAAConvLSTM':
+                    cell = SAAConvLSTMCell(2 * self.stack_sizes[l], self.R_stack_sizes[l], self.R_filt_sizes[l],
+                                                self.num_past_frames, self.dk, self.dv, self.Nh, width, height,
+                                                self.attention_input_mode, self.positional_encoding, self.forget_bias)
                     setattr(self, 'cell{}'.format(l), cell)
                 else:
                     print("Error. Layer type not recognized.")
@@ -105,7 +116,7 @@ class Model(nn.Module):
 
         for l in range(self.nb_layers):
 
-            if self.layer_type[l] != "ConvLSTM": # FIX Check for SAAConvLSTM
+            if self.layer_type[l] != "ConvLSTM":
                 cell = getattr(self, 'cell{}'.format(l))
                 # cell.init_hidden(batch_size=batch_size, hidden=self.R_stack_sizes[l],
                 #                                                  shape=(h, w))
@@ -145,10 +156,15 @@ class Model(nn.Module):
 
                 if self.layer_type[l] == "ConvLSTM":
                     Rep, Cell = cell(tmpPredNet, Cell)
-                else:
+                elif self.layer_type[l] == "TAAConvLSTM":
                     His = self.return_history(History, l)
                     Rep, Cell = cell(tmpAtt, Rep, Cell, His)
                     History[l].append(Rep)
+                elif self.layer_type[l] == "SAAConvLSTM":
+                    Rep, Cell = cell(tmpAtt, Rep, Cell)
+                else:
+                    print("Error. Layer type not recognized.")
+
 
                 RepVec[l] = Rep
                 CellVec[l] = Cell
