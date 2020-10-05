@@ -2,12 +2,10 @@
 
 Implementation of TAAConvLSTM and SAAConvLSTM used in "Attention Augmented ConvLSTM for Environment Prediction" by Bernard Lange, Masha Itkina, and Mykel J.Kochenderfer.
 
-TAAConvLSTM and SAAConvLSTM are attention augmented ConvLSTM mechanisms motivated by the limited long-range dependencies between hidden representations resulting in the vanishing of moving objects and poor spatial dependcies in the hidden representations. 
+TAAConvLSTM and SAAConvLSTM are attention augmented ConvLSTM mechanisms motivated by the limited long-range dependencies between hidden representations resulting in the vanishing of moving objects and poor spatial dependcies in the hidden representations.
+We test it as part of the PredNet architecture (Lotter W, Kreiman G, Cox D., 2016). The comparison of the predictions is shown below. 
 
 ![](images/Kitti.gif) ![](images/Waymo.gif)
-
-
-We test it as part of the PredNet architecture (Lotter W, Kreiman G, Cox D., 2016). The comparison of the predictions is shown below.
 
 ## Setup
 - Python 3.7
