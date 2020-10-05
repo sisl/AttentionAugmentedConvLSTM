@@ -11,6 +11,7 @@ Requirements:
 - python 3.7
 - pytorch VER
 - CUDA VER
+- Tensorboard 
 - numpy
 
 
