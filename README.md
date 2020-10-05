@@ -17,19 +17,26 @@ We run experiments on: [KITTI](http://www.cvlibs.net/datasets/kitti/raw_data.php
 Dataset processing according to: https://github.com/mitkina/EnvironmentPrediction.
 Modify the config in the configs file with a path to the preprocessed dataset.
 
-## Training & Inference
-The procedure to train the models and make inference are described in the README.md files in the Code/PredNet_(TAA/SAA)ConvLSTM folder.
+## Training
+Run the following script with appropriate config file from the configs folder.
 
+```bash
+train.sh
+```
 
+## Inference
+```python
+predict.py
+```
 ## References 
 
-Lotter, W., Kreiman, G. and Cox, D., 2016. Deep predictive coding networks for video prediction and unsupervised learning. 
+* Lotter, W., Kreiman, G. and Cox, D., 2016. Deep predictive coding networks for video prediction and unsupervised learning. 
 
-Bello, I., Zoph, B., Vaswani, A., Shlens, J. and Le, Q.V., 2019. Attention augmented convolutional networks. In Proceedings of the IEEE International Conference on Computer Vision (pp. 3286-3295).
+* Bello, I., Zoph, B., Vaswani, A., Shlens, J. and Le, Q.V., 2019. Attention augmented convolutional networks. In Proceedings of the IEEE International Conference on Computer Vision (pp. 3286-3295).
 
-Itkina, Masha, Katherine Driggs-Campbell, and Mykel J. Kochenderfer. Tensorflow implementation of "Dynamic Environment Prediction in Urban Scenes using Recurrent Representation Learning." https://github.com/mitkina/EnvironmentPrediction
+* Itkina, Masha, Katherine Driggs-Campbell, and Mykel J. Kochenderfer. Tensorflow implementation of "Dynamic Environment Prediction in Urban Scenes using Recurrent Representation Learning." https://github.com/mitkina/EnvironmentPrediction
 
-Myeongjun Kim Attention Augmented Conv2d Pytorch implementation (AAConv2d.py): https://github.com/leaderj1001/Attention-Augmented-Conv2d
+* Myeongjun Kim Attention Augmented Conv2d Pytorch implementation (AAConv2d.py): https://github.com/leaderj1001/Attention-Augmented-Conv2d
 
 
 
