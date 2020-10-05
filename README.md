@@ -4,15 +4,10 @@ Implementation of TAAConvLSTM and SAAConvLSTM used in "Attention Augmented ConvL
 
 TAAConvLSTM and SAAConvLSTM are attention augmented ConvLSTM mechanisms motivated by the limited long-range dependencies between hidden representations resulting in the vanishing of moving objects and poor spatial dependcies in the hidden representations. In this work, we extend the "Attention Augmented Convolutional Networks" (Bello et al., 2019) and test it as part of the PredNet architecture ("Lotter W, Kreiman G, Cox D. Deep predictive coding networks for video prediction and unsupervised learning.2016). The comparison of the predictions is shown below.
 
-
-IMAGE
-
-Requirements:
-- python 3.7
-- pytorch VER
-- CUDA VER
-- Tensorboard 
-- numpy
+Trained on:
+- Python 3.7
+- Pytorch 1.4.0 (cudatoolkit=10.1)
+- Numpy 1.18.5
 
 
 # Demo
