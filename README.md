@@ -1,4 +1,4 @@
-# AttentionAugmentedConvLSTM
+# Attention Augmented ConvLSTM for Environment Prediction
 
 Implementation of TAAConvLSTM and SAAConvLSTM used in "Attention Augmented ConvLSTM for Environment Prediction" by Bernard Lange, Masha Itkina, and Mykel J.Kochenderfer.
 
