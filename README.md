@@ -23,11 +23,6 @@ Run the following script with appropriate config file from the configs folder.
 ```bash
 train.sh
 ```
-
-## Inference
-```python
-predict.py
-```
 ## References 
 
 * Lotter, W., Kreiman, G. and Cox, D., 2016. Deep predictive coding networks for video prediction and unsupervised learning. 
