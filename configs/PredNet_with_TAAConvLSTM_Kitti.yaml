@@ -15,7 +15,7 @@ model:
   attention_fusion: learned_weight
 
 training:
-  dataset_path: "../DATASETS/KITTI/DST_EV/"
+  dataset_path: "../DATASETS/KITTI/DST_EV/" #Modify this
   model_name: PredNet_with_TAAConvLSTM_Kitti
   save_model: True
   nb_epochs: 100
