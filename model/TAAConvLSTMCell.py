@@ -1,3 +1,4 @@
+import torch
 import torch.nn as nn
 from torch.autograd import Variable
 from model.TAAConv2d import TAAConv2d
@@ -35,8 +36,7 @@ class TAAConvLSTMCell(nn.Module):
         self.attention_input_mode = attention_input_mode
         self.positional_encoding = positional_encoding
         self.forget_bias = forget_bias
-
-        self.padding = int((kernel_size - 1) / 2) # Padding
+        self.padding = int((kernel_size - 1) / 2)
 
         self.W_xi = nn.Conv2d(self.input_channels, self.hidden_channels, self.kernel_size, 1, self.padding, bias=True)
         self.W_hi = TAAConv2d(self.hidden_channels, self.hidden_channels, self.kernel_size, self.padding,
@@ -62,21 +62,7 @@ class TAAConvLSTMCell(nn.Module):
         o_t = torch.sigmoid(self.W_xo(inputs) + self.W_ho(rep,history) +  c_t * self.W_co)
         h_t = o_t * torch.tanh(c_t)
 
-
         return h_t, c_t
-
-    # Peephole connection issue
-
-
-    # https://github.com/pytorch/pytorch/issues/1706
-    # def init_hidden(self, batch_size, hidden, shape):
-    #     if self.W_ci is None:
-    #         self.W_ci = nn.Parameter(torch.zeros(1, hidden, shape[0], shape[1], device=torch.device('cuda:0')))
-    #         self.W_cf = nn.Parameter(torch.zeros(1, hidden, shape[0], shape[1], device=torch.device('cuda:0')))
-    #         self.W_co = nn.Parameter(torch.zeros(1, hidden, shape[0], shape[1], device=torch.device('cuda:0')))
-    #     else:
-    #         assert shape[0] == self.W_ci.size()[2], 'Input Height Mismatched!'
-    #         assert shape[1] == self.W_ci.size()[3], 'Input Width Mismatched!'
 
     def reset_parameters(self):
         self.W_xi.reset_parameters()

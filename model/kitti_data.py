@@ -1,7 +1,6 @@
 "https://github.com/leido/pytorch-prednet/blob/master/kitti_data.py"
 
 import hickle as hkl
-
 import torch
 import torch.utils.data as data
 
@@ -10,7 +9,6 @@ class KITTI(data.Dataset):
         self.datafile = datafile
         self.sourcefile = sourcefile
         self.X = hkl.load(self.datafile)
-        print(self.X.shape)
         self.sources = hkl.load(self.sourcefile)
         self.nt = nt
         self.mode = mode
@@ -34,7 +32,6 @@ class KITTI(data.Dataset):
     def __getitem__(self, index):
         loc = self.possible_starts[index]
         return self.X[loc:loc+self.nt]
-
 
     def __len__(self):
         return len(self.possible_starts)

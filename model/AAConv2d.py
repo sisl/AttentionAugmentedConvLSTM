@@ -27,19 +27,9 @@ class AAConv2d(nn.Module):
         self.attn_out = nn.Conv2d(self.dv, self.dv, 1)
 
     def forward(self, x):
-        # Input x
-        # (batch_size, channels, height, width)
+
         batch, _, height, width = x.size()
-
-        # conv_out
-        # (batch_size, out_channels, height, width)
         conv_out = self.conv_out(x)
-
-        # flat_q, flat_k, flat_v
-        # (batch_size, Nh, height * width, dvh or dkh)
-        # dvh = dv / Nh, dkh = dk / Nh
-        # q, k, v
-        # (batch_size, Nh, height, width, dv or dk)
         flat_q, flat_k, flat_v, q, k, v = self.compute_flat_qkv(x, self.dk, self.dv, self.Nh)
         logits = torch.matmul(flat_q.transpose(2, 3), flat_k)
 
@@ -49,12 +39,9 @@ class AAConv2d(nn.Module):
             logits += w_rel_logits
         weights = F.softmax(logits, dim=-1)
 
-        # attn_out
-        # (batch, Nh, height * width, dvh)
         attn_out = torch.matmul(weights, flat_v.transpose(2, 3))
         attn_out = torch.reshape(attn_out, (batch, self.Nh, self.dv // self.Nh, height, width))
-        # combine_heads_2d
-        # (batch, out_channels, height, width)
+
         attn_out = self.combine_heads_2d(attn_out)
         attn_out = self.attn_out(attn_out)
         return torch.cat((conv_out, attn_out), dim=1)

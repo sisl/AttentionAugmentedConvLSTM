@@ -43,9 +43,6 @@ class TAAConv2d(nn.Module):
         self.spatio_temporal_attention = SpatioTemporalAttention(self.out_channels, self.num_past_frames, self.kernel_size, self.padding,
                                                                     self.dk, self.dv, self.Nh, self.width, self.height, self.relative)
 
-        #MODIFIED
-        #self.output = nn.Conv2d(self.out_channels, self.out_channels, kernel_size=1, stride=1, bias=True)
-
     def forward(self, rep, history):
 
         attn_out = self.spatio_temporal_attention(rep, history)
@@ -55,8 +52,5 @@ class TAAConv2d(nn.Module):
             concat_out = torch.cat((conv_out, attn_out), dim=1)
         else:
             concat_out = attn_out
-
-        #MODIFIED
-        #out = self.output(concat_out)
 
         return concat_out

@@ -146,10 +146,10 @@ class Model(nn.Module):
 
         for l in range(self.nb_layers):
 
-            if self.layer_type[l] != "ConvLSTM":
-                cell = getattr(self, 'cell{}'.format(l))
-                # cell.init_hidden(batch_size=batch_size, hidden=self.R_stack_sizes[l],
-                #                                                  shape=(h, w))
+            # if self.layer_type[l] == "TAAConvLSTM":
+            #     cell = getattr(self, 'cell{}'.format(l))
+            #     cell.init_hidden(batch_size=batch_size, hidden=self.R_stack_sizes[l],
+            #                                                      shape=(h, w))
             ErrorVec[l] = torch.zeros(batch_size, 2*self.stack_sizes[l], h, w, device=torch.device('cuda:0'))
             RepVec[l] = torch.zeros(batch_size, self.R_stack_sizes[l], h, w, device=torch.device('cuda:0'))
             History.append([torch.zeros(batch_size, self.R_stack_sizes[l], h, w, device=torch.device('cuda:0'))])

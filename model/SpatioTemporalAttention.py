@@ -20,7 +20,7 @@ class SpatioTemporalAttention(nn.Module):
             forget_bias: whether to add forget bias when training in the forget gate
             padding: padding
     '''
-    
+
     def __init__(self, input_channels,  num_past_frames, kernel_size, padding,  dk, dv, Nh, width, height, relative = True):
 
         super(SpatioTemporalAttention, self).__init__()
@@ -35,7 +35,6 @@ class SpatioTemporalAttention(nn.Module):
         self.height = height
         self.Nh = Nh
         self.relative = relative
-
         self.spatial_attn_out = SpatialAttention(self.in_channels, self.kernel_size, self.padding, self.dk, self.dv, self.Nh, self.width, self.height, self.relative)
         self.temporal_weights = nn.Conv2d(self.num_past_frames,1,kernel_size=1, stride=1,bias=False)
 
@@ -46,7 +45,6 @@ class SpatioTemporalAttention(nn.Module):
 
         # SpatialAttention perfroms regular attention for each (inputs, history[t]) pair
         history = torch.reshape(history, (batch_size*timesteps, channels_history, height, width))
-
         repeating_inputs = torch.repeat_interleave(inputs, repeats = timesteps, dim=0)
 
         #Considered both inputs and history as keys.
@@ -54,9 +52,7 @@ class SpatioTemporalAttention(nn.Module):
 
         #Output should be batch_size*timesteps, self.dv, heigh, width
         spatial_attn_out = torch.reshape(spatial_attn_out, (batch_size, timesteps, self.dv, height, width))
-
         spatial_attn_out = torch.transpose(spatial_attn_out, 1,2)
-
         spatial_attn_out = torch.reshape(spatial_attn_out, (batch_size*self.dv, timesteps, height, width))
         out = self.temporal_weights(spatial_attn_out).squeeze(1)
         out = torch.reshape(out, (batch_size, self.dv, height, width))

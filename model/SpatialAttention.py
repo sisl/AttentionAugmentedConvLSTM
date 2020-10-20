@@ -35,8 +35,6 @@ class SpatialAttention(nn.Module):
         self.q_conv = nn.Conv2d(self.in_channels, self.Nh*self.dk, kernel_size=self.kernel_size, stride=1, padding=self.padding)
         self.k_conv = nn.Conv2d(self.in_channels, self.Nh*self.dk, kernel_size=self.kernel_size, stride=1, padding=self.padding)
         self.v_conv = nn.Conv2d(self.in_channels, self.Nh*self.dv, kernel_size=self.kernel_size, stride=1, padding=self.padding)
-        #self.norm = nn.LayerNorm([self.dv, self.height, self.width])
-
         self.attn_out = nn.Conv2d(self.Nh*self.dv, self.dv, kernel_size=1, stride=1)
 
         if self.relative:
@@ -59,7 +57,6 @@ class SpatialAttention(nn.Module):
         spatial_attn_out = torch.reshape(spatial_attn_out, (batch, self.Nh, self.dv, height, width))
         attn_out = self.combine_heads_2d(spatial_attn_out)
         attn_out = self.attn_out(attn_out)
-        #out = self.norm(attn_out)
         return attn_out
 
     def compute_flat_qkv(self, q_x, k_x, v_x):
