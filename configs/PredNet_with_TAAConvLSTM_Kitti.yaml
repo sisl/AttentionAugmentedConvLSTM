@@ -1,7 +1,7 @@
 model:
   nt: 20
   nb_of_layers: 4
-  type_of_all_layers: [ConvLSTM, ConvLSTM, SAAConvLSTM, SAAConvLSTM]
+  type_of_all_layers: [ConvLSTM, ConvLSTM, ConvLSTM, TAAConvLSTM]
   input_shape: [2, 128, 128] # n_channels, im_hegiht, im_width
   stack_sizes: [48, 96, 192] # same as R_stack_sizes
   A_filt_sizes: [3, 3, 3]
